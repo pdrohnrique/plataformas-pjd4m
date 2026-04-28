@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -9,6 +10,7 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    
     public static GameManager Instance { get; private set; }
     private GameState _currentState;
 
@@ -24,15 +26,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        SetState(GameState.Loading);
+    }
+    
+    public void SetState(GameState newState)
+    {
+        _currentState = newState;
+        Debug.Log("Game State: " + _currentState);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadScene(string sceneName)
     {
-        
+        SceneManager.LoadScene(sceneName);
     }
 }
