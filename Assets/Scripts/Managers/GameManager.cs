@@ -1,44 +1,57 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GameState
+namespace Managers
 {
-    Loading,
-    MainMenu,
-    Playing
-}
-
-public class GameManager : MonoBehaviour
-{
-    
-    public static GameManager Instance { get; private set; }
-    private GameState _currentState;
-
-    void Awake()
+    public enum GameState
     {
-        if (Instance != null && Instance != this)
+        Loading,
+        MainMenu,
+        Playing
+    }
+
+    public class GameManager : MonoBehaviour
+    {
+    
+        public static GameManager Instance { get; private set; }
+        private GameState _currentState;
+
+        void Awake()
         {
-            Destroy(gameObject);
-            return;
-        }
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
         
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     
-    void Start()
-    {
-        SetState(GameState.Loading);
-    }
-    
-    public void SetState(GameState newState)
-    {
-        _currentState = newState;
-        Debug.Log("Game State: " + _currentState);
-    }
+        void Start()
+        {
+            SetState(GameState.Loading);
+        }
 
-    public void LoadScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
+        private void SetState(GameState newState)
+        {
+            _currentState = newState;
+            Debug.Log("Game State: " + _currentState);
+        }
+
+        public void LoadScene(string sceneName)
+        {
+            switch (sceneName)
+            {
+                case "MainMenu":
+                    SetState(GameState.MainMenu);
+                    break;
+                case "GameScene":
+                    SetState(GameState.Playing);
+                    break;
+            }
+        
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

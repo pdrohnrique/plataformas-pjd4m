@@ -1,12 +1,8 @@
+using Managers;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    void Start()
-    {
-        GameManager.Instance.SetState(GameState.MainMenu);
-    }
-    
     public void StartGame()
     {
         GameManager.Instance.LoadScene("GameScene");
