@@ -1,6 +1,6 @@
 using System;
 
-public static class PlayerOM
+public static class PlayerOm
 {
     public static event Action<int> OnCoinCollected;
     

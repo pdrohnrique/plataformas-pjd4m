@@ -48,6 +48,7 @@ namespace Managers
                     break;
                 case "GameScene":
                     SetState(GameState.Playing);
+                    SceneManager.LoadScene("GUI", LoadSceneMode.Additive);
                     break;
             }
         

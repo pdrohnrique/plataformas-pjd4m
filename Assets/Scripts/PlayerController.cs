@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,18 +7,21 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
     private int _coinCount = 0;
+    private Vector2 _moveInput;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
+    
+    private void OnMove(InputValue value)
+    {
+        _moveInput = value.Get<Vector2>();
+    }
 
     private void FixedUpdate()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(moveX, 0, moveZ) * speed;
+        Vector3 movement = new Vector3(_moveInput.x, 0, _moveInput.y) * speed;
         _rb.linearVelocity = movement;
     }
 
@@ -26,7 +30,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             _coinCount++;
-            PlayerOM.NotifyCoinCollected(_coinCount);
+            PlayerOm.NotifyCoinCollected(_coinCount);
             Destroy(other.gameObject);
         }
     }
