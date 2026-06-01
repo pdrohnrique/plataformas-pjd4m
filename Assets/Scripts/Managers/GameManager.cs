@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,11 +49,18 @@ namespace Managers
                     break;
                 case "GameScene":
                     SetState(GameState.Playing);
-                    SceneManager.LoadScene("GUI", LoadSceneMode.Additive);
-                    break;
+                    StartCoroutine(LoadSceneWithGUI(sceneName));
+                    return;
             }
         
             SceneManager.LoadScene(sceneName);
+        }
+
+        private IEnumerator LoadSceneWithGUI(string sceneName)
+        {
+            AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+            yield return op;
+            SceneManager.LoadScene("GUI", LoadSceneMode.Additive);
         }
     }
 }
