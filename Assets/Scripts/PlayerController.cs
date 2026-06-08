@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
 
     private Rigidbody _rb;
-    private int _coinCount = 0;
+    private int _coinCount;
     private Vector2 _moveInput;
 
     private void Awake()
